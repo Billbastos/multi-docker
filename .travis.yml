@@ -2,18 +2,18 @@ sudo: required
 services:
   - docker
 before_install:
-  - docker build -t gui/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t guibastos/react-test -f ./client/Dockerfile.dev ./client
 script:
-  - docker run -e CI=true gui/react-test npm run test -- --coverage
+  - docker run -e CI=true guibastos/react-test npm run test -- --coverage
 after_success:
-  - docker build -t gui/multi-client ./client
-  - docker build -t gui/multi-nginx ./nginx
-  - docker build -t gui/multi-server ./server
-  - docker build -t gui/multi-worker ./worker
+  - docker build -t guibastos/multi-client ./client
+  - docker build -t guibastos/multi-nginx ./nginx
+  - docker build -t guibastos/multi-server ./server
+  - docker build -t guibastos/multi-worker ./worker
   # Log in to the docker CLI.
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push gui/multi-client
-  - docker push gui/multi-nginx
-  - docker push gui/multi-server
-  - docker push gui/multi-worker
+  - docker push guibastos/multi-client
+  - docker push guibastos/multi-nginx
+  - docker push guibastos/multi-server
+  - docker push guibastos/multi-worker
